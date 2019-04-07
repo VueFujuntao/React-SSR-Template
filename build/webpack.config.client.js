@@ -1,15 +1,18 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+console.log(isDev);
 
-module.exports = {
+const config = {
   entry: {
     app: path.join(__dirname, '../client/app.js')
   },
   output: {
     filename: '[name].[hash].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: './'
+    publicPath: './public'
   },
   module: {
     rules: [
@@ -27,6 +30,27 @@ module.exports = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, '../public/index.html')
+    })
   ]
 }
+
+if (isDev) {
+  config.devServer = {
+    publicPath: '/',
+    host: '0.0.0.0',
+    port: 8888,
+    contentBase: path.join(__dirname, '../dist'),
+    hot: true,
+    overlay: {
+      errors: true
+    },
+    publicPath: '/public',
+    historyApiFallback: {
+      index: '/public/index.html'
+    }
+  }
+}
+
+module.exports = config;
