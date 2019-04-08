@@ -25,20 +25,20 @@ serverCompiler.watch({}, (err, stats) => {
  if (err) throw err;
  stats = stats.toJson();
  stats.errors.forEach(element => {
-   console.error(element);
+   console.error('error' + element);
  });
  stats.warnings.forEach(element => {
-   console.warn(element);
+   console.warn('waring  ' + element);
  });
 
  const bundlePath = path.join(
    serverConfig.output.path,
    serverConfig.output.filename
  )
+ 
  const bundle = mfs.readFileSync(bundlePath, 'utf-8');
  const m = new Module();
  m._compile(bundle, 'server-entry.js');
- console.log(m)
  serverBundle = m.exports.default;
 })
 
@@ -49,7 +49,7 @@ module.exports = function(app) {
   app.get('*', function(req, res) {
     getTemplate().then(template => {
       const content = ReactDOMServer.renderToString(serverBundle);
-      res.send(template.data.replace('<!-- APP -->', content));
+      res.send(template.data.replace('<!-- APP Build -->', content));
     })
   })
 }

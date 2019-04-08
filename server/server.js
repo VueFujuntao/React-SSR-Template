@@ -13,7 +13,7 @@ if (!isDev) {
   app.use('/public', express.static(path.join(__dirname, '../dist')));
   app.get('*', function(req, res) {
     const appString = ReactSSR.renderToString(serverEntry);
-    res.send(templateHtml.replace(`<!-- APP -->`, appString));
+    res.send(templateHtml.replace(`<!-- APP Build -->`, appString));
   });
 } else {
   const devStatic = require('./util/dev-static.js');

@@ -1,10 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
-console.log(isDev);
 
 const config = {
   entry: {
@@ -38,12 +37,6 @@ const config = {
 }
 
 if (isDev) {
-  // config.entry = {
-  //   app: [
-  //     'react-hot-loader/patch',
-  //     path.join(__dirname, '../client/app.js')
-  //   ]
-  // }
   config.devServer = {
     publicPath: '/',
     host: '0.0.0.0',
@@ -60,5 +53,5 @@ if (isDev) {
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
-console.log(config)
+
 module.exports = config;
