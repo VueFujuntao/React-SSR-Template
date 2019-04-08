@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -12,7 +13,7 @@ const config = {
   output: {
     filename: '[name].[hash].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: './public'
+    publicPath: './public/'
   },
   module: {
     rules: [
@@ -37,6 +38,12 @@ const config = {
 }
 
 if (isDev) {
+  // config.entry = {
+  //   app: [
+  //     'react-hot-loader/patch',
+  //     path.join(__dirname, '../client/app.js')
+  //   ]
+  // }
   config.devServer = {
     publicPath: '/',
     host: '0.0.0.0',
@@ -51,6 +58,7 @@ if (isDev) {
       index: '/public/index.html'
     }
   }
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
-
+console.log(config)
 module.exports = config;
