@@ -35,9 +35,13 @@ if (isDev) {
     publicPath: '/public',
     historyApiFallback: {
       index: '/public/index.html'
+    },
+    proxy: {
+      '/api': 'http://localhost:3000'
     }
   }
-  const plugins = [new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin()]
+  // , new webpack.NoEmitOnErrorsPlugin()
+  const plugins = [new webpack.HotModuleReplacementPlugin()]
   config.plugins.push(...plugins);
 }
 

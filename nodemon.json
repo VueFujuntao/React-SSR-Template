@@ -1,5 +1,6 @@
 {
   "restartable": "rs",
+  "watch": ["server"],
   "igonre": [
     ".git",
     "node_modules/**/node_modules",

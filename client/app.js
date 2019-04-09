@@ -1,14 +1,16 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'mobx-react';
 // import { AppContainer } from 'react-hot-loader';
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 // Provider 用来保持与 store 的更新
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
 // redux 合并后的文件
 import reducer from "./redux/index.js";
-import App from './app.jsx';
-
+import App from './views/app.jsx';
+import appState from './store/app.state'
 // const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
 const root = document.getElementById('app');
 const store = createStore(
@@ -24,8 +26,10 @@ const store = createStore(
 
 const hydrate = Component => {
   ReactDOM.hydrate(
-    <Provider store={store}>
-      <Component/>
+    <Provider appState={appState}>
+      <BrowserRouter>
+        <Component />
+      </BrowserRouter>
     </Provider>,
     root
   )
@@ -34,8 +38,8 @@ const hydrate = Component => {
 hydrate(App);
 
 if (module.hot) {
-  module.hot.accept('./app.jsx', () => {
-    const NextApp = require('./app.jsx').default;
+  module.hot.accept('./views/app.jsx', () => {
+    const NextApp = require('./views/app.jsx').default;
     hydrate(NextApp);
   })
 }
