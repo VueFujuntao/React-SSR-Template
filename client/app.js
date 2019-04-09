@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 // redux 合并后的文件
 import reducer from "./redux/index.js";
 import App from './views/app.jsx';
-import appState from './store/app.state'
+import AppState from './store/app.state'
 // const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
 const root = document.getElementById('app');
 const store = createStore(
@@ -23,10 +23,11 @@ const store = createStore(
     window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
   )
 );
+const initState = window.__INITIAL__STATE__ || {};
 
 const hydrate = Component => {
   ReactDOM.hydrate(
-    <Provider appState={appState}>
+    <Provider appState={new AppState(initState.appState)}>
       <BrowserRouter>
         <Component />
       </BrowserRouter>

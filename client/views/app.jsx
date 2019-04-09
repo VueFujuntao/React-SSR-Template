@@ -9,8 +9,18 @@ import TestApi from './test/api-test.jsx';
 @observer
 export default class App extends React.Component {
   componentDidMount() {
-    console.log(`11111111111111111111111111111111111111111`)
   }
+
+  asyncBootstrap() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.props.appState.count = 3;
+        resolve(true);
+      })
+    })
+  }
+
+  
   render() {
     return (
       <div>

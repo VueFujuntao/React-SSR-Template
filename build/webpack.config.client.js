@@ -17,6 +17,10 @@ const config = Merge(baseConfig, {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../public/index.html')
+    }),
+    new HtmlWebpackPlugin({
+      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../public/server.index.ejs'),
+      filename: 'server.ejs'
     })
   ]
 })
