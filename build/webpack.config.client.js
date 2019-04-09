@@ -1,42 +1,28 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.js');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
-const config = {
+const config = Merge(baseConfig, {
   entry: {
     app: path.join(__dirname, '../client/app.js')
   },
   output: {
     filename: '[name].[hash].js',
-    path: path.join(__dirname, '../dist'),
-    publicPath: './public/'
-  },
-  module: {
-    rules: [
-      {
-        test: /.jsx$/,
-        loader: 'babel-loader',
-      },
-      {
-        test: /.js/,
-        loader: 'babel-loader',
-        exclude: [
-          path.join(__dirname, '../node_modules')
-        ]
-      }
-    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../public/index.html')
     })
   ]
-}
+})
 
 if (isDev) {
+  config.mode = 'development',
   config.devServer = {
     publicPath: '/',
     host: '0.0.0.0',
@@ -51,7 +37,8 @@ if (isDev) {
       index: '/public/index.html'
     }
   }
-  config.plugins.push(new webpack.HotModuleReplacementPlugin())
+  const plugins = [new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin()]
+  config.plugins.push(...plugins);
 }
 
 module.exports = config;
