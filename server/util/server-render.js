@@ -19,13 +19,15 @@ module.exports = (bundle, template, req, res) => {
     const stores = createStoreMap();
     const app = createApp(stores, routerContext, req.url);
     asyncBootstrap(app).then(() => {
+      const content = ReactDOMServer.renderToString(app);
+
       if (routerContext.url) {
         res.status(302).setHeader('Location', routerContext.url);
         res.end();
         return;
       }
+      
       const state = getStoreState(stores);
-      const content = ReactDOMServer.renderToString(app);
       const helmet = Heimet.rewind();
       
       const html = ejs.render(template, {
