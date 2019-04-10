@@ -39,12 +39,12 @@ let serverBundle;
 serverCompiler.watch({}, (err, stats) => {
   if (err) throw err;
   stats = stats.toJson();
-  // stats.errors.forEach(element => {
-  //   console.error('error' + element);
-  // });
-  // stats.warnings.forEach(element => {
-  //   console.warn('waring  ' + element);
-  // });
+  stats.errors.forEach(element => {
+    console.error('error' + element);
+  });
+  stats.warnings.forEach(element => {
+    console.warn('waring  ' + element);
+  });
 
   const bundlePath = path.join(
     serverConfig.output.path,
@@ -68,6 +68,7 @@ module.exports = function (app) {
       return serverRender(serverBundle, template.data, req, res);
     }).catch(err => {
       // 牛逼操作
+      console.log(err);
       next();
     })
   })
