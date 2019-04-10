@@ -1,6 +1,6 @@
 import { observable, computed, autorun, action } from 'mobx';
 
-export class AppState {
+export default class AppState {
   @observable count = 0;
   @observable name = 'jocky'
   @computed get msg() {
@@ -13,11 +13,3 @@ export class AppState {
     this.name = event
   }
 }
-
-const appState = new AppState();
-
-autorun(() => {
-  console.log(appState.msg);
-})
-
-export default appState;

@@ -11,9 +11,15 @@ export default class Routes extends React.Component {
     return (
       <Switch>
         <Route path="/" exact render={() => <Redirect to="/list" />} />
-        <Route path="/list" component={TopicList} exact />
-        <Route path="/detail" component={TopicDetail} exact />
+        <Route path="/list" component={TopicList} />
+        <Route path="/detail" component={TopicDetail} />
       </Switch>
     )
   }
 }
+
+// export default () => [
+//   <Route path="/" exact render={() => <Redirect to="/list" key="first" />} />,
+//   <Route path="/list" component={TopicList} key="list" />,
+//   <Route path="/detail" component={TopicDetail} key="detail"/>
+// ]
