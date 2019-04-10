@@ -1,7 +1,7 @@
 import React from 'react';
+import App from './views/app.jsx';
 import { StaticRouter } from 'react-router-dom';
 import { Provider, useStaticRendering } from 'mobx-react';
-import App from './views/app.jsx';
 export { createStoreMap } from './store/store';
 
 useStaticRendering(true);

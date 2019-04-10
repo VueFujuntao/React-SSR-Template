@@ -16,23 +16,44 @@ const config = Merge(baseConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.html')
+      template: path.join(__dirname, '../public/index.html'),
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeEmptyAttributes: true
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../public/server.index.ejs'),
+      filename: 'server.ejs',
+      inject: true,
+      minify: {
+        collapseWhitespace: true,
+        removeEmptyAttributes: true,
+        removeComments: true
+      }
     })
   ]
 })
 
 if (isDev) {
-  config.mode = 'development',
+  config.mode = 'development'
+  config.entry = {
+    app: [
+      'react-hot-loader/patch',
+      path.join(__dirname, '../client/app.js')
+    ]
+  }
   config.devServer = {
-    publicPath: '/',
     host: '0.0.0.0',
     port: 8888,
-    contentBase: path.join(__dirname, '../dist'),
+    // contentBase: path.join(__dirname, '../dist'),
     hot: true,
     overlay: {
       errors: true
     },
-    publicPath: '/public',
+    publicPath: '/public/',
     historyApiFallback: {
       index: '/public/index.html'
     },
@@ -40,8 +61,8 @@ if (isDev) {
       '/api': 'http://localhost:3000'
     }
   }
-  // , new webpack.NoEmitOnErrorsPlugin()
-  const plugins = [new webpack.HotModuleReplacementPlugin()]
+  // 
+  const plugins = [new webpack.HotModuleReplacementPlugin(),  new webpack.NoEmitOnErrorsPlugin()]
   config.plugins.push(...plugins);
 }
 

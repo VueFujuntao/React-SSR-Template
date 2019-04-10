@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   output: {
@@ -10,8 +11,7 @@ module.exports = {
     modules: [path.resolve(__dirname, '..', 'node_modules')],
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /.jsx$/,
         loader: 'babel-loader',
       },
@@ -23,5 +23,8 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
 }
