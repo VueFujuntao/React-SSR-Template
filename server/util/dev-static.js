@@ -3,11 +3,8 @@ const webpack = require('webpack');
 const path = require('path');
 const MemoryFs = require('memory-fs');
 const proxy = require('http-proxy-middleware');
-const ReactDOMServer = require('react-dom/server');
-const asyncBootstrap = require('react-async-bootstrapper').default;
 const serverConfig = require('../../build/webpack.config.server.js');
-const ejs = require('ejs');
-const serialize = require('serialize-javascript');
+const serverRender = require('./server-render');
 
 const getTemplate = () => {
   return new Promise((resolve, reject) => {
@@ -37,7 +34,7 @@ const getModuleFromString = (bundle, filename) => {
 const mfs = new MemoryFs
 const serverCompiler = webpack(serverConfig);
 serverCompiler.outputFileSystem = mfs;
-let serverBundle, createStoreMap;
+let serverBundle;
 serverCompiler.watch({}, (err, stats) => {
   if (err) throw err;
   stats = stats.toJson();
@@ -54,45 +51,20 @@ serverCompiler.watch({}, (err, stats) => {
   )
 
   const bundle = mfs.readFileSync(bundlePath, 'utf-8');
-  // const m = new Module();
-  // m._compile(bundle, 'server-entry.js');
   const m = getModuleFromString(bundle, 'server-entry.js');
-  console.log(m)
-  serverBundle = m.exports.default;
-  createStoreMap = m.exports.createStoreMap;
+  serverBundle = m.exports;
 })
-
-const getStoreState = (stores) => {
-  return Object.keys(stores).reduce((result, storeName) => {
-    result[storeName] = stores[storeName].toJson();
-    return result;
-  }, {})
-}
 
 module.exports = function (app) {
   app.use('/public', proxy({
     target: 'http://localhost:8888'
   }));
-  app.get('*', function (req, res) {
+  app.get('*', function (req, res, next) {
     getTemplate().then(template => {
-      let routerContext = {};
-      console.log(createStoreMap)
-      const stores = createStoreMap();
-      const app = serverBundle(stores, routerContext, req.url);
-      asyncBootstrap(app).then(() => {
-        if (routerContext.url) {
-          res.status(302).setHeader('Location', routerContext.url);
-          res.end();
-          return;
-        }
-        const state = getStoreState(stores);
-        const content = ReactDOMServer.renderToString(app);
-        const html = ejs.render(template.data, {
-          appString: content,
-          initalState: serialize(state)
-        })
-        res.send(html);
-      })
+      return serverRender(serverBundle, template.data, req, res);
+    }).catch(err => {
+      // 牛逼操作
+      next();
     })
   })
 }

@@ -16,11 +16,23 @@ const config = Merge(baseConfig, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.html')
+      template: path.join(__dirname, '../public/index.html'),
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeEmptyAttributes: true
+      }
     }),
     new HtmlWebpackPlugin({
       template: '!!ejs-compiled-loader!' + path.join(__dirname, '../public/server.index.ejs'),
-      filename: 'server.ejs'
+      filename: 'server.ejs',
+      inject: true,
+      minify: {
+        collapseWhitespace: true,
+        removeEmptyAttributes: true,
+        removeComments: true
+      }
     })
   ]
 })

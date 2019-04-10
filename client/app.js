@@ -26,7 +26,7 @@ const store = createStore(
 const initState = window.__INITIAL__STATE__ || {};
 
 const hydrate = Component => {
-  ReactDOM.hydrate(
+  ReactDOM.render(
     <Provider appState={new AppState(initState.appState)}>
       <BrowserRouter>
         <Component />
@@ -35,9 +35,6 @@ const hydrate = Component => {
     root
   )
 }
-
-
-
 
 hydrate(App);
 
