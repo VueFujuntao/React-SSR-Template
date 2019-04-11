@@ -7,7 +7,7 @@
     "build:client": "webpack --config build/webpack.config.client.js",
     "build:server": "webpack --config build/webpack.config.server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
-    "dev:server": "nodemon -x forever start server/server.js",
+    "dev:server": "cross-env NODE_ENV=development supervisor server/server.js",
     "build": "npm run build:client && npm run build:server",
     "start": "cross-env NODE_ENV=production node server/server.js"
   },
@@ -29,6 +29,7 @@
     "nodemon": "^1.18.11",
     "react-hot-loader": "^4.5.3",
     "rimraf": "^2.6.3",
+    "supervisor": "^0.12.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "3.2.1",
