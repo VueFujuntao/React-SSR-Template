@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   output: {
@@ -23,20 +24,20 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
+        test: /\.(s)?css$/,
+        exclude: /node_modules/,
         use: [
-          'isomorphic-style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1
-            }
-          }
+          MiniCssExtractPlugin.loader,
+          "css-loader"
         ]
       }
     ]
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    })
   ]
 }

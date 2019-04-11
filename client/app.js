@@ -11,7 +11,7 @@ import thunk from "redux-thunk";
 import reducer from "./redux/index.js";
 import App from './views/app.jsx';
 import AppState from './store/app.state';
-import injectSheet, {ThemeProvider} from 'react-jss'
+// import injectSheet, {ThemeProvider} from 'react-jss'
 // const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
 const root = document.getElementById('app');
 const store = createStore(
