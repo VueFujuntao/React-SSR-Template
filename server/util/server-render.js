@@ -3,6 +3,8 @@ const serialize = require('serialize-javascript');
 const asyncBootstrap = require('react-async-bootstrapper').default;
 const ReactDOMServer = require('react-dom/server');
 const Heimet = require('react-helmet').default;
+const SheetsRegistry = require('react-jss').SheetsRegistry;
+const JssProvider = require('react-jss').JssProvider;
 
 const getStoreState = (stores) => {
   return Object.keys(stores).reduce((result, storeName) => {
@@ -17,8 +19,17 @@ module.exports = (bundle, template, req, res) => {
     const createApp = bundle.default;
     let routerContext = {};
     const stores = createStoreMap();
-    const app = createApp(stores, routerContext, req.url);
+    const sheets = new SheetsRegistry();
+    const app = createApp(stores, routerContext, req.url, sheets);
     asyncBootstrap(app).then(() => {
+      // console.log(sheets)
+      // console.log(JssProvider)
+      // const content = ReactDOMServer.renderToString(
+      //   <JssProvider registry={sheets}>
+      //     <app />
+      //   </JssProvider>
+      // )
+      console.log(sheets.toString())
       const content = ReactDOMServer.renderToString(app);
 
       if (routerContext.url) {
