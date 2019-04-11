@@ -10,7 +10,8 @@ import thunk from "redux-thunk";
 // redux 合并后的文件
 import reducer from "./redux/index.js";
 import App from './views/app.jsx';
-import AppState from './store/app.state'
+import AppState from './store/app.state';
+import injectSheet, {ThemeProvider} from 'react-jss'
 // const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
 const root = document.getElementById('app');
 const store = createStore(

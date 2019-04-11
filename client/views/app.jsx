@@ -4,12 +4,15 @@ import Routes from '../config/router.jsx';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { AppState } from '../store/app.state.js';
-import TestApi from './test/api-test.jsx'
+import TestApi from './test/api-test.jsx';
 
 @inject('appState')
 @observer
 
 export default class App extends React.Component {
+  componentWillMount() {
+   
+  }
   componentDidMount() {
   }
 
