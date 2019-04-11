@@ -28,6 +28,14 @@ module.exports = (bundle, template, req, res) => {
 
     const app = createApp(stores, routerContext, req.url, sheetsRegistry, jss);
     asyncBootstrap(app).then(() => {
+      // console.log(sheets)
+      // console.log(JssProvider)
+      // const content = ReactDOMServer.renderToString(
+      //   <JssProvider registry={sheets}>
+      //     <app />
+      //   </JssProvider>
+      // )
+      console.log(sheets.toString())
       const content = ReactDOMServer.renderToString(app);
       if (routerContext.url) {
         res.status(302).setHeader('Location', routerContext.url);
