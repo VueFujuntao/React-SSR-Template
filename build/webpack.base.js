@@ -33,7 +33,9 @@ module.exports = {
               hot: true
             }
           },
-          "css-loader"
+          {
+            loader: 'css-loader'
+          }
         ]
       }
     ]
@@ -41,7 +43,7 @@ module.exports = {
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1
+      maxChunks: 100
     }),
     new ExtractCssChunks({
       filename: 'static/css/[name].css',

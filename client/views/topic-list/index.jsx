@@ -2,6 +2,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 // import injectSheet from 'react-jss';
 import  './index.css';
+import { connect } from 'react-redux';
+import { setSourceDataInput } from '../../redux/module/dataSource'
+
 // console.log(styles)
 // const styles = {
 //   myButton: {
@@ -21,12 +24,30 @@ import  './index.css';
 //   }
 // }
 // @injectSheet(styles)
+@connect(
+  state => state.dataSource,
+  {setSourceDataInput}
+)
  class TopicList extends React.Component {
   constructor(props) {
     super(props)
   }
+  asyncBootstrap() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+       console.log(12222)
+      })
+    })
+  }
+  // static fetch() {
+
+  // }
+  componentWillMount() {
+    this.props.setSourceDataInput(20)
+  }
   componentDidMount() {
     console.log(1)
+
   }
   render() {
     const {classes} = this.props;

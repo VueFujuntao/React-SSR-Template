@@ -14,20 +14,20 @@ module.exports = Merge(baseConfig, {
     libraryTarget: 'commonjs2',
   },
   module: {
-    rules: [
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'css-loader/locals',
-            options: {
-              modules: true,
-              localIdentName: '[name]__[local]--[hash:base64:5]'
-            }
-          }
-        ]
-      }
-    ]
+    // rules: [
+    //   {
+    //     test: /\.css$/,
+    //     exclude: /node_modules/,
+    //     use: [
+    //       {
+    //         loader: 'css-loader/locals',
+    //         options: {
+    //           modules: true,
+    //           localIdentName: '[name]__[local]--[hash:base64:5]'
+    //         }
+    //       }
+    //     ]
+    //   }
+    // ]
   }
 })

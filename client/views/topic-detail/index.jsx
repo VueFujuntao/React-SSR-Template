@@ -1,5 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import './index.css';
 
 export default class TopicDetail extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class TopicDetail extends React.Component {
           <title>this is topic detail</title>
           <meta name="description" content="this is topic detail"></meta>
         </Helmet>
-        <h1>this.TopicDetail</h1>
+        <h1 className="titles">this.TopicDetail</h1>
       </div>
     )
   }
