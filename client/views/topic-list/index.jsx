@@ -1,7 +1,8 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 // import injectSheet from 'react-jss';
-import './index.css'
+import  './index.css';
+// console.log(styles)
 // const styles = {
 //   myButton: {
 //     color: 'green',
@@ -35,7 +36,7 @@ import './index.css'
           <title>this is topic list</title>
           <meta name="description" content="this is topic lists"></meta>
         </Helmet>
-        <h1 className="title">TopicList</h1>
+        <h1 className='title'>TopicList</h1>
       </div>
     )
   }

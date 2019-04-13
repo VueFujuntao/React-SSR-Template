@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 
 module.exports = {
   output: {
@@ -26,8 +27,12 @@ module.exports = {
       {
         test: /\.(s)?css$/,
         exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
+        use: [{
+            loader: ExtractCssChunks.loader,
+            options: {
+              hot: true
+            }
+          },
           "css-loader"
         ]
       }
@@ -35,9 +40,12 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    }),
+    new ExtractCssChunks({
+      filename: 'static/css/[name].css',
       chunkFilename: '[id].css'
-    })
+    }),
   ]
 }

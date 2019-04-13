@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Merge = require('webpack-merge');
 const baseConfig = require('./webpack.base.js');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isDev = process.env.NODE_ENV === 'development';
 
 const config = Merge(baseConfig, {
@@ -13,6 +13,18 @@ const config = Merge(baseConfig, {
   },
   output: {
     filename: '[name].[hash].js',
+  },
+  module: {
+    rules: [
+      // {
+      //   test: /\.(s)?css$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     MiniCssExtractPlugin.loader,
+      //     "css-loader"
+      //   ]
+      // }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -33,7 +45,8 @@ const config = Merge(baseConfig, {
         removeEmptyAttributes: true,
         removeComments: true
       }
-    })
+    }),
+    // new MiniCssExtractPlugin()
   ]
 })
 

@@ -39,7 +39,7 @@ const hydrate = Component => {
     root
   )
 }
-console.log(process.env)
+// console.log(process.env)
 hydrate(App);
 
 if (module.hot) {

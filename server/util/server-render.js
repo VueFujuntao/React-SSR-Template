@@ -3,9 +3,10 @@ const serialize = require('serialize-javascript');
 const asyncBootstrap = require('react-async-bootstrapper').default;
 const ReactDOMServer = require('react-dom/server');
 const Heimet = require('react-helmet').default;
-// const SheetsRegistry = require('react-jss').SheetsRegistry
+const SheetsRegistry = require('react-jss').SheetsRegistry
 // const create = require('jss').create
-// const preset = require('jss-preset-default').default
+const preset = require('jss-preset-default').default
+const create = require('jss').create
 
 const getStoreState = (stores) => {
   return Object.keys(stores).reduce((result, storeName) => {
@@ -23,10 +24,10 @@ module.exports = (bundle, template, req, res) => {
     };
     const stores = createStoreMap();
     
-    // const sheetsRegistry = new SheetsRegistry()
-    // const jss = create(preset())
+    const sheetsRegistry = new SheetsRegistry()
+    const jss = create(preset())
 
-    const app = createApp(stores, routerContext, req.url);
+    const app = createApp(stores, routerContext, req.url, sheetsRegistry, jss);
     asyncBootstrap(app).then(() => {
       // console.log(JssProvider)
       // const content = ReactDOMServer.renderToString(
@@ -43,7 +44,7 @@ module.exports = (bundle, template, req, res) => {
       }
       const state = getStoreState(stores);
       const helmet = Heimet.rewind();
-
+      // console.log(sheetsRegistry.toString())
       const html = ejs.render(template, {
         appString: content,
         initalState: serialize(state),
