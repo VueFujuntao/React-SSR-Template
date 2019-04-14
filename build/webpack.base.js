@@ -14,19 +14,22 @@ module.exports = {
   },
   module: {
     rules: [{
-        test: /.jsx$/,
-        loader: 'babel-loader',
-      },
-      {
-        test: /.js/,
+        test: /.js|jsx$/,
         loader: 'babel-loader',
         exclude: [
           path.join(__dirname, '../node_modules')
         ]
       },
+      // {
+      //   test: /.js/,
+      //   loader: 'babel-loader'
+      //   ,
+      //   exclude: [
+      //     path.join(__dirname, '../node_modules')
+      //   ]
+      // },
       {
-        test: /\.(s)?css$/,
-        exclude: /node_modules/,
+        test: /\.css$/,
         use: [{
             loader: ExtractCssChunks.loader,
             options: {
@@ -36,6 +39,18 @@ module.exports = {
           {
             loader: 'css-loader'
           }
+        ]
+      },
+      {
+        test: /\.less$/,
+        include: path.join(__dirname, '/node_modules/antd'),
+        use: [{
+            loader: ExtractCssChunks.loader,
+            options: {
+              hot: true
+            },
+          },
+          'css-loader', 'less-loader'
         ]
       }
     ]

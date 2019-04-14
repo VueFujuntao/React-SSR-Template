@@ -9,6 +9,9 @@ import Routes from '../config/router.jsx';
 import { connect } from 'react-redux';
 // import store from '../store/store.js';
 import { setSourceDataInput } from '../redux/module/dataSource'
+import 'antd/dist/antd.css';
+import { Button } from "antd";
+
 // const styles = {
 //   myButton: {
 //     color: 'green',
@@ -66,7 +69,9 @@ export default class App extends React.Component {
       <div>
         <Link to="/">首页</Link>
         <br />
-        <Link to="/detail">详情</Link>
+        <Link to="/detail">
+          <Button>详情</Button>
+        </Link>
         {this.props.pageNum}
         {/* {this.props.appState.msg} */}
         <Routes/>
